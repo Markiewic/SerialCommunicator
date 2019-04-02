@@ -1,0 +1,8 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/Debug
+/.vs/SerialCommunicator/v15
+/SerialCommunicator/Debug/NMEATesting.tlog
+/SerialCommunicator/Debug

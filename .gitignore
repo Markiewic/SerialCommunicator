@@ -3,6 +3,7 @@
 ################################################################################
 
 /Debug
+/x64
 /.vs/SerialCommunicator/v15
 /SerialCommunicator/Debug/NMEATesting.tlog
 /SerialCommunicator/Debug

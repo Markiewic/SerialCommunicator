@@ -1,8 +1,0 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppClean.targets(76,5): warning : Отказано в доступе по пути "c:\users\akhod\source\repos\serial_communicator\x64\debug\serialcommunicator.exe".
-  pch.cpp
-  SerialCommunicator.cpp
-c:\users\akhod\source\repos\serial_communicator\serialcommunicator\serialhandler.cpp(119): warning C4267: аргумент: преобразование из "size_t" в "DWORD"; возможна потеря данных
-  SerialHandler.cpp
-c:\users\akhod\source\repos\serial_communicator\serialcommunicator\serialhandler.cpp(119): warning C4267: аргумент: преобразование из "size_t" в "DWORD"; возможна потеря данных
-  Создание кода...
-  SerialCommunicator.vcxproj -> C:\Users\akhod\source\repos\serial_communicator\x64\Debug\SerialCommunicator.exe

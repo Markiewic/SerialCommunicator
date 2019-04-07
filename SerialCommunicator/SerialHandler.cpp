@@ -3,7 +3,6 @@
 #include <string>
 #include <functional>
 #include <thread>
-#include <queue>
 
 using namespace std;
 
@@ -14,7 +13,6 @@ private:
 	wstring port;
 	int rate;
 	bool is_connected;
-	queue<string> transmit_queue;
 
 public:
 
@@ -24,7 +22,6 @@ public:
 		this->rate = rate;
 		this->is_connected = false;
 		this->h_serial = NULL;
-		this->transmit_queue = queue<string>{};
 	}
 
 	int connect(function<void(char)> on_char, function<void(int)> on_error) {

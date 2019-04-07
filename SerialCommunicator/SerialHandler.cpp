@@ -3,6 +3,7 @@
 #include <string>
 #include <functional>
 #include <thread>
+#include <queue>
 
 using namespace std;
 
@@ -13,6 +14,7 @@ private:
 	wstring port;
 	int rate;
 	bool is_connected;
+	queue<string> transmit_queue;
 
 public:
 
@@ -22,6 +24,7 @@ public:
 		this->rate = rate;
 		this->is_connected = false;
 		this->h_serial = NULL;
+		this->transmit_queue = queue<string>{};
 	}
 
 	int connect(function<void(char)> on_char, function<void(int)> on_error) {
@@ -130,6 +133,7 @@ public:
 		reader_event.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
 
 		if (!WriteFile(this->h_serial, payload.c_str(), (DWORD)payload.length(), written_size, &reader_event)) {
+			//dwRes = ::;
 			switch (WaitForSingleObject(reader_event.hEvent, INFINITE)) {
 			case WAIT_OBJECT_0:
 				if (!GetOverlappedResult(this->h_serial, &reader_event, written_size, FALSE)) return 1;

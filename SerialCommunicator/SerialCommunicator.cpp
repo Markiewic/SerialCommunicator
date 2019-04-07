@@ -7,30 +7,27 @@
 
 using namespace std;
 
-HANDLE h_serial;
-
-void ReadCOM();
-
 int main(int argc, char* argv[]) {
-
-	string port_str = "\\\\.\\";
+	string port;
 	string rate_str;
+	bool crlf = false;
 
 	for (int i = 0; i < argc; i++) {
 		if (string(argv[i]) == "-port") {
-			port_str += argv[++i];
+			port = argv[++i];
 		}
 		else if (string(argv[i]) == "-rate") {
 			rate_str = argv[++i];
 		}
+		else if (string(argv[i]) == "-crlf") {
+			crlf = true;
+		}
 	}
 
-	cout << "PORT: " << port_str.c_str() << ", RATE: " << rate_str.c_str() << endl;
-
-	wstring port = wstring(port_str.begin(), port_str.end());
 	int rate = stoi(rate_str);
+	cout << "PORT: " << port.c_str() << ", RATE: " << rate << endl;
 
-	SerialHandler connection = SerialHandler(port_str, rate);
+	SerialHandler connection = SerialHandler(port, rate);
 	int result = connection.connect([](char symb) {
 		cout << symb;
 	});
@@ -38,6 +35,7 @@ int main(int argc, char* argv[]) {
 	string tr_data;
 	while (true) {
 		getline(cin, tr_data);
+		if (crlf) tr_data += "\n";
 		connection.send(tr_data);
 	}
 	

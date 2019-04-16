@@ -1,3 +1,4 @@
+#include "pch.h"
 #include <string>
 #include <functional>
 
@@ -15,16 +16,15 @@ public:
 	AsyncAccumulator(char separator, function<void(string)> subscriber) {
 		this->accumulator = string("");
 		this->separator = separator;
-		this->accumulator = accumulator;
+		this->subscriber = subscriber;
 	}
 
 	void append(char payload) {
+		this->accumulator += payload;
 		if (payload == this->separator) {
 			this->subscriber(this->accumulator);
 			this->accumulator = string("");
-			return;
 		}
-		this->accumulator += payload;
 	}
 
 	~AsyncAccumulator() {}

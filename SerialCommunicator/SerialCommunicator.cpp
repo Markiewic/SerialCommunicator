@@ -4,13 +4,14 @@
 #include <string>
 #include <thread>
 #include "SerialHandler.cpp"
+#include "AsyncAccumulator.cpp"
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
 	string port;
 	string rate_str;
-	bool crlf = false;
+	bool crlf = true;
 
 	for (int i = 0; i < argc; i++) {
 		if (string(argv[i]) == "-port") {
@@ -19,18 +20,22 @@ int main(int argc, char* argv[]) {
 		else if (string(argv[i]) == "-rate") {
 			rate_str = argv[++i];
 		}
-		else if (string(argv[i]) == "-crlf") {
-			crlf = true;
+		else if (string(argv[i]) == "-!crlf") {
+			crlf = false;
 		}
 	}
 
 	int rate = stoi(rate_str);
 	cout << "PORT: " << port.c_str() << ", RATE: " << rate << endl;
 
-	SerialHandler connection = SerialHandler(port, rate);
-	int result = connection.connect([](char symb) {
-		cout << symb;
+	AsyncAccumulator *waiter = new AsyncAccumulator('\n', [](string line) {
+		cout << line;
 	});
+
+	SerialHandler connection = SerialHandler(port, rate);
+	int result = connection.connect([waiter](char symb) { waiter->append(symb); });
+
+	cout << "CONNECTION STATUS: " << result << endl;
 
 	string tr_data;
 	while (true) {
@@ -40,5 +45,4 @@ int main(int argc, char* argv[]) {
 	}
 	
 	return 0;
-
 }
